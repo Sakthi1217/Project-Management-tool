@@ -1,6 +1,6 @@
 import { Phase, PhaseMember } from './types';
 
-const API_BASE = 'http://localhost:3001/api/phases'; // Adjusted based on backend port
+const API_BASE = '/api/phase-tracker'; // Handled by nginx proxy
 
 export const fetchPhases = async (projectId: number): Promise<Phase[]> => {
   const res = await fetch(`${API_BASE}/project/${projectId}`);

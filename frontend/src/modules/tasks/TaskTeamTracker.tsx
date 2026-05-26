@@ -33,7 +33,7 @@ export const TaskTeamTracker: React.FC<TaskTeamTrackerProps> = ({ taskId }) => {
   const loadMembers = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3001/api/tareas/${taskId}/miembros`, {
+      const res = await fetch(`/api/tasks/${taskId}/miembros`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -58,7 +58,7 @@ export const TaskTeamTracker: React.FC<TaskTeamTrackerProps> = ({ taskId }) => {
     
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3001/api/tareas/${taskId}/miembros`, {
+      const res = await fetch(`/api/tasks/${taskId}/miembros`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

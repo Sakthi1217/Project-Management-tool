@@ -5,6 +5,8 @@ import { sendTaskAssignedEmail } from '../services/mail.js';
 import { logActividad } from '../utils/actividad.js';
 import { recalcularProgresoProyecto } from '../utils/progreso.js';
 
+import { createJiraIssue, updateJiraIssueProgress } from '../services/jira.js';
+
 const router = Router();
 router.use(authMiddleware);
 
@@ -54,6 +56,17 @@ router.post('/', requireRole('admin', 'editor'), async (req: AuthRequest, res: R
     'INSERT INTO tareas (proyecto_id, nombre, descripcion, estado, fecha_inicio, fecha_fin, duracion_dias, responsable_id, tarea_padre_id, orden, sprint_id, prioridad, porcentaje_avance, story_points, peso) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING *',
     [proyecto_id, nombre, descripcion || null, finalState, fecha_inicio || null, fecha_fin || null, duracion_dias || null, responsable_id || null, tarea_padre_id || null, orden || 0, sprint_id || null, prioridad || 'media', finalProgress, story_points || null, peso ?? 1]
   );
+
+  // Sync to Jira
+  try {
+    const jiraIssue = await createJiraIssue(nombre, descripcion || '');
+    if (jiraIssue) {
+      await getOne('UPDATE tareas SET jira_issue_id = $1, jira_issue_key = $2 WHERE id = $3 RETURNING *', [jiraIssue.id, jiraIssue.key, createdTask.id]);
+      createdTask.jira_issue_key = jiraIssue.key;
+    }
+  } catch (e) {
+    console.error('Failed to sync task to Jira', e);
+  }
 
   // Send email notification if assigned
   if (responsable_id) {
@@ -155,7 +168,13 @@ router.patch('/:id/progress', requireRole('admin', 'editor'), async (req: AuthRe
     'UPDATE tareas SET porcentaje_avance=$1, updated_at=NOW() WHERE id=$2 RETURNING *',
     [finalProgress, req.params.id]
   );
-  if (updatedTask) recalcularProgresoProyecto(updatedTask.proyecto_id).catch(() => {});
+  
+  if (updatedTask) {
+    recalcularProgresoProyecto(updatedTask.proyecto_id).catch(() => {});
+    if (updatedTask.jira_issue_key) {
+      updateJiraIssueProgress(updatedTask.jira_issue_key, finalProgress).catch(e => console.error('Failed to sync progress to Jira', e));
+    }
+  }
   res.json(updatedTask);
 });
 

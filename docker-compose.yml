@@ -31,6 +31,7 @@ services:
     environment:
       NODE_ENV:    production
       PORT:        3001
+      NODE_TLS_REJECT_UNAUTHORIZED: "0"
       # Database
       DB_HOST:     database
       DB_PORT:     5432
@@ -58,6 +59,10 @@ services:
       KEYCLOAK_CLIENT_SECRET: ${KEYCLOAK_CLIENT_SECRET:-}
       KEYCLOAK_CALLBACK_URL: ${KEYCLOAK_CALLBACK_URL:-}
       FRONTEND_URL:         ${FRONTEND_URL}
+      # Jira
+      JIRA_HOST:            ${JIRA_HOST:-}
+      JIRA_EMAIL:           ${JIRA_EMAIL:-}
+      JIRA_API_TOKEN:       ${JIRA_API_TOKEN:-}
     volumes:
       - uploads:/app/uploads
     # Backend is NOT exposed to the host — only reachable by frontend nginx

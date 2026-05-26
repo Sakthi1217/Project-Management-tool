@@ -17,6 +17,7 @@ import aiRoutes from './routes/ai.js';
 import activityRoutes from './routes/activity.js';
 import adminRoutes from './routes/admin.js';
 import phaseRoutes from './modules/phaseTracker/phaseRoutes.js';
+import jiraRoutes from './routes/jira.js';
 import { startReminderJobs } from './jobs/reminders.js';
 import { join } from 'path';
 
@@ -37,12 +38,14 @@ app.use('/api/hitos', milestonesRoutes);
 app.use('/api/dependencias', dependenciesRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/usuarios', usersRoutes);
+app.use('/api/users', usersRoutes);
 app.use('/api/comentarios', commentsRoutes);
 app.use('/api/sprints', sprintsRoutes);
 app.use('/api/ai', aiRoutes);
-app.use('/api/actividad', activityRoutes);
+app.use('/api/activity', activityRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/phases', phaseRoutes);
+app.use('/api/phase-tracker', phaseRoutes);
+app.use('/api/jira', jiraRoutes);
 
 // Static file serving for uploads
 app.use('/uploads', express.static(join(process.cwd(), 'uploads')));

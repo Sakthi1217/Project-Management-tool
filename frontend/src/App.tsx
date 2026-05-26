@@ -14,6 +14,7 @@ import UsersPage from './pages/UsersPage';
 import AiConfigPage from './pages/AiConfigPage';
 import AdminSettingsPage from './pages/AdminSettingsPage';
 import OAuthCallbackPage from './pages/OAuthCallbackPage';
+import { JiraDashboard } from './modules/jira/JiraDashboard';
 
 export default function App() {
   const { isAuthenticated } = useAuthStore();
@@ -43,6 +44,7 @@ export default function App() {
           <Route path="/projects/:id" element={<ProjectDetailPage />} />
           <Route path="/schedule" element={<SchedulePage />} />
           <Route path="/team" element={<TeamPage />} />
+          <Route path="/jira-workload" element={<JiraDashboard />} />
           <Route path="/users" element={<ProtectedRoute roles={['admin']}><UsersPage /></ProtectedRoute>} />
           <Route path="/ai-config" element={<ProtectedRoute roles={['admin']}><AiConfigPage /></ProtectedRoute>} />
           <Route path="/admin/settings" element={<ProtectedRoute roles={['admin']}><AdminSettingsPage /></ProtectedRoute>} />
