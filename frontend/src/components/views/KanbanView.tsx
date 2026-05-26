@@ -18,10 +18,10 @@ interface KanbanViewProps {
 }
 
 const COLUMNS: { key: Tarea['estado']; label: string; color: string; bgColor: string }[] = [
-  { key: 'pendiente', label: 'Pendiente', color: 'text-gray-700', bgColor: 'bg-gray-100' },
-  { key: 'en_progreso', label: 'En Progreso', color: 'text-blue-700', bgColor: 'bg-blue-50' },
-  { key: 'completada', label: 'Completada', color: 'text-green-700', bgColor: 'bg-green-50' },
-  { key: 'bloqueada', label: 'Bloqueada', color: 'text-red-700', bgColor: 'bg-red-50' },
+  { key: 'pendiente', label: 'Pending', color: 'text-gray-700', bgColor: 'bg-gray-100' },
+  { key: 'en_progreso', label: 'In Progress', color: 'text-blue-700', bgColor: 'bg-blue-50' },
+  { key: 'completada', label: 'Completed', color: 'text-green-700', bgColor: 'bg-green-50' },
+  { key: 'bloqueada', label: 'Blocked', color: 'text-red-700', bgColor: 'bg-red-50' },
 ];
 
 export default function KanbanView({ tareas, onUpdate, onEditTarea, onOpenUpdates, readOnly }: KanbanViewProps) {
@@ -42,7 +42,7 @@ export default function KanbanView({ tareas, onUpdate, onEditTarea, onOpenUpdate
 
     try {
       await api.updateTarea(tareaId, { ...tarea, estado: newEstado });
-      toast.success(`Tarea movida a ${getEstadoLabel(newEstado)}`);
+      toast.success(`Task moved to ${getEstadoLabel(newEstado)}`);
       onUpdate();
     } catch (e: any) {
       toast.error(e.message);

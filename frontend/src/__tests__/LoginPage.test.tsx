@@ -61,11 +61,4 @@ describe('LoginPage', () => {
     );
   });
 
-  it('renders Keycloak SSO button', async () => {
-    renderLogin();
-    await waitFor(() =>
-      expect(screen.getByRole('button', { name: /sign in with sso/i })).toBeInTheDocument()
-    );
-  });
-
 });

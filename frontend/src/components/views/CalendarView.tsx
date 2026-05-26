@@ -53,16 +53,16 @@ export default function CalendarView({ tareas, hitos, onTareaClick }: CalendarVi
         plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         events={events}
-        locale="es"
+        locale="en"
         headerToolbar={{
           left: 'prev,next today',
           center: 'title',
           right: 'dayGridMonth,dayGridWeek',
         }}
         buttonText={{
-          today: 'Hoy',
-          month: 'Mes',
-          week: 'Semana',
+          today: 'Today',
+          month: 'Month',
+          week: 'Week',
         }}
         height="auto"
         eventClick={(info) => {
@@ -85,7 +85,7 @@ export default function CalendarView({ tareas, hitos, onTareaClick }: CalendarVi
           );
         }}
         dayMaxEvents={3}
-        moreLinkText={(n) => `+${n} mas`}
+        moreLinkText={(n) => `+${n} more`}
       />
     </div>
   );

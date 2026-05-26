@@ -116,7 +116,7 @@ export default function LoginPage() {
           </button>
         </form>
 
-        {(providers.google || providers.keycloak) && (
+        {providers.google && (
           <div className="mt-5">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
@@ -127,27 +127,14 @@ export default function LoginPage() {
               </div>
             </div>
 
-            {providers.google && (
-              <button
-                type="button"
-                onClick={handleGoogleLogin}
-                className="mt-4 w-full flex items-center justify-center gap-3 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                <GoogleIcon />
-                Sign in with Google
-              </button>
-            )}
-
-            {providers.keycloak && (
-              <button
-                type="button"
-                onClick={handleKeycloakLogin}
-                className="mt-3 w-full flex items-center justify-center gap-3 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                <KeycloakIcon />
-                Sign in with SSO (Keycloak)
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={handleGoogleLogin}
+              className="mt-4 w-full flex items-center justify-center gap-3 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              <GoogleIcon />
+              Sign in with Google
+            </button>
           </div>
         )}
 
